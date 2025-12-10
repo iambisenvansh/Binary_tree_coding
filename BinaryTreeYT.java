@@ -99,6 +99,50 @@ public class BinaryTreeYT {
             int rightsum = sumOfNodes(root.right);
             return leftsum + rightsum + root.data;
         }
+        public static int height(Node root){
+            if(root == null){
+                return 0;
+            }
+            int leftHeight = height(root.left);
+            int rightHeight = height(root.right);
+            int myHeight = Math.max(leftHeight, rightHeight) + 1;
+            return myHeight;
+        }
+
+        public static int diameter(Node root){
+            if(root == null){
+                return 0;
+            }
+            int D1 = diameter(root.left);
+            int D2 = diameter(root.right);
+            int D3 = height(root.left) + height(root.right) + 1;
+            return Math.max(D3, Math.max(D1, D2));
+
+        }
+        public static class Info{
+            int ht;
+            int diam;
+            Info(int ht, int diam){
+                this.ht = ht;
+                this.diam = diam;
+            }
+        }
+        public static Info diameter2(Node root){
+            if(root == null){
+                return new Info(0, 0);
+            }
+            Info left = diameter2(root.left);
+            Info right = diameter2(root.right);
+            int myHeight = Math.max(left.ht, right.ht) + 1;
+            int D1 = left.diam;
+            int D2 = right.diam;
+            int D3 = left.ht + right.ht + 1;
+            int myDiam = Math.max(Math.max(D1, D2), D3);
+
+            Info myInfo = new Info(myHeight, myDiam);
+            return myInfo;
+
+        }
         }
     
     public static void main(String[] args){
@@ -111,7 +155,10 @@ public class BinaryTreeYT {
         // tree.postorder(root);
         // tree.levelorder(root);
         // System.out.println(tree.countOfNodes(root));
-        System.out.println(tree.sumOfNodes(root));
+        // System.out.println(tree.sumOfNodes(root));
+        // System.out.println(tree.height(root));
+        System.out.println(tree.diameter(root));
+    
 
     }
 }
